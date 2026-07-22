@@ -42,6 +42,3 @@ extern OS_EVENT *AccountSem;   // µC/OS-II 세마포어
 make
 ./ATM_machine
 ```
-
-## 자료
-PDF로 제안서, 최종 보고서 모두 보존.
