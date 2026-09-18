@@ -14,7 +14,7 @@ UCOS_ROOT ?= C:/software/ucos-II
 UCOS_SRC := $(UCOS_ROOT)/source
 UCOS_PORT_SRC := $(UCOS_ROOT)/ports/80x86/win32/vc/src
 
-.PHONY: all test check lint clean app-msvc
+.PHONY: all test check lint clean app-msvc clean-msvc
 
 all: check test
 
@@ -34,13 +34,19 @@ lint:
 		--error-exitcode=1 --suppress=missingIncludeSystem \
 		-Iinclude src/atm_domain.c src/atm_storage.c
 
-# Run this target from a Visual Studio Developer Command Prompt with GNU Make.
-# The external uC/OS-II source tree is intentionally not vendored into this repo.
+# Run from a Visual Studio Developer Command Prompt with GNU Make.
+# The external uC/OS-II source tree is intentionally not vendored.
 app-msvc:
 	cl -nologo /W4 /MD /Iinclude /I"$(UCOS_SRC)" /I"$(UCOS_PORT_SRC)" \
 		src/atm_app.c src/atm_domain.c src/atm_storage.c \
 		"$(UCOS_SRC)/ucos_ii.c" "$(UCOS_PORT_SRC)/pc.c" "$(UCOS_PORT_SRC)/os_cpu_c.c" \
-		winmm.lib user32.lib /Fe:$(BUILD_DIR)/atm_refactored.exe
+		winmm.lib user32.lib /Fe:atm_refactored.exe
 
 clean:
 	rm -rf $(BUILD_DIR)
+
+clean-msvc:
+	@if exist *.obj del *.obj
+	@if exist *.pdb del *.pdb
+	@if exist *.ilk del *.ilk
+	@if exist atm_refactored.exe del atm_refactored.exe
