@@ -1,0 +1,19 @@
+# Build artifacts
+*.exe
+*.obj
+*.o
+*.pdb
+*.ilk
+*.log
+*.out
+
+# Local build directories
+build/
+refactored/build/
+
+# IDE / OS
+.vs/
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
