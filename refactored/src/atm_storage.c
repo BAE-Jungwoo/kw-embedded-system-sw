@@ -4,18 +4,20 @@
 #include <string.h>
 #include <time.h>
 
+/* MSVC localtime_s writes to out_tm; cppcheck models the ISO C argument order. */
+// cppcheck-suppress constParameterPointer
 static int get_local_time(time_t now, struct tm *out_tm)
 {
-    struct tm *tmp;
-
     if (out_tm == NULL) {
         return 0;
     }
 
 #ifdef _WIN32
+    /* The first argument is an output buffer in the MSVC API. */
+    // cppcheck-suppress uninitvar
     return localtime_s(out_tm, &now) == 0;
 #else
-    tmp = localtime(&now);
+    const struct tm *tmp = localtime(&now);
     if (tmp == NULL) {
         return 0;
     }

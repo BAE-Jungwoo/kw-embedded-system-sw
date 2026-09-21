@@ -30,8 +30,10 @@ test: $(BUILD_DIR)
 	./$(TEST_BIN)
 
 lint:
-	cppcheck --enable=warning,style,performance,portability \
-		--error-exitcode=1 --suppress=missingIncludeSystem \
+	cppcheck --check-level=exhaustive \
+		--enable=warning,style,performance,portability \
+		--error-exitcode=1 --inline-suppr \
+		--suppress=missingIncludeSystem \
 		-Iinclude src/atm_domain.c src/atm_storage.c
 
 # Run from a Visual Studio Developer Command Prompt with GNU Make.
